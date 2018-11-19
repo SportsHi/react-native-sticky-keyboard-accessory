@@ -45,15 +45,27 @@ export default class KeyboardAccessory extends Component {
     this.keyboardHideListener.remove();
   }
 
+  configureLayoutAnimation = e => LayoutAnimation.configureNext({
+    duration: e.duration,
+    create: {
+      type: LayoutAnimation.Types.keyboard,
+      property: LayoutAnimation.Properties.scaleXY,
+    },
+    update: {
+      delay: 0,
+      type: LayoutAnimation.Types.keyboard,
+    },
+  })
+
   keyboardShow(e) {
-    LayoutAnimation.easeInEaseOut();
+    this.configureLayoutAnimation(e);
     this.setState({
       bottom: isIphoneX() ? (e.endCoordinates.height - SAFE_AREA_BOTTOM_HEIGHT) : e.endCoordinates.height
     });
   }
 
   keyboardHide(e) {
-    LayoutAnimation.easeInEaseOut();
+    this.configureLayoutAnimation(e);
     this.setState({
       bottom: 0
     });
